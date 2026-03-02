@@ -1,18 +1,126 @@
-# This .gitignore is appropriate for repositories deployed to GitHub Pages and using
-# a Gemfile as specified at https://github.com/github/pages-gem#conventional
+#include <iostream>
+#include <cstdlib>  // for rand() and srand()
+#include <ctime>    // for time()
+#include <string>
+using namespace std;
 
-# Basic Jekyll gitignores (synchronize to Jekyll.gitignore)
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
+int main() {
+    srand(static_cast<unsigned int>(time(0)));  // seed random number generator
 
-# Additional Ruby/bundler ignore for when you run: bundle install
-/vendor
+    char dieTypeChoice;
+    bool continueFishing = true;
+    int totalPoints = 0;
 
-# Specific ignore for GitHub Pages
-# GitHub Pages will always use its own deployed version of pages-gem 
-# This means GitHub Pages will NOT use your Gemfile.lock and therefore it is
-# counterproductive to check this file into the repository.
-# Details at https://github.com/github/pages-gem/issues/768
-Gemfile.lock
+    cout << "Welcome to the Fishing Game!\n";
+    cout << "Choose your die: 6-sided (enter 6) or 8-sided (enter 8): ";
+    cin >> dieTypeChoice;
+
+    int dieSides;
+    if (dieTypeChoice == '6') {
+        dieSides = 6;
+    } else {
+        dieSides = 8;
+    }
+
+    cin.ignore(); // ignore leftover newline
+
+    while (continueFishing) {
+        int roll = rand() % dieSides + 1; // random number between 1 and dieSides
+        int points = 0;
+        string catchItem;
+
+        // Assign items and points depending on die roll
+        if (dieSides == 6) {
+            switch (roll) {
+                case 1:
+                    catchItem = "a huge fish";
+                    points = 10;
+                    break;
+                case 2:
+                    catchItem = "an old boot";
+                    points = 1;
+                    break;
+                case 3:
+                    catchItem = "a little fish";
+                    points = 5;
+                    break;
+                case 4:
+                    catchItem = "a shiny treasure chest";
+                    points = 15;
+                    break;
+                case 5:
+                    catchItem = "a rubber duck";
+                    points = 2;
+                    break;
+                case 6:
+                    catchItem = "a medium fish";
+                    points = 7;
+                    break;
+            }
+        } else { // 8-sided die
+            switch (roll) {
+                case 1:
+                    catchItem = "a huge fish";
+                    points = 10;
+                    break;
+                case 2:
+                    catchItem = "an old boot";
+                    points = 1;
+                    break;
+                case 3:
+                    catchItem = "a little fish";
+                    points = 5;
+                    break;
+                case 4:
+                    catchItem = "a shiny treasure chest";
+                    points = 15;
+                    break;
+                case 5:
+                    catchItem = "a rubber duck";
+                    points = 2;
+                    break;
+                case 6:
+                    catchItem = "a medium fish";
+                    points = 7;
+                    break;
+                case 7:
+                    catchItem = "a golden fish";
+                    points = 20;
+                    break;
+                case 8:
+                    catchItem = "a strange bottle";
+                    points = 3;
+                    break;
+            }
+        }
+
+        cout << "You caught " << catchItem << "!" << endl;
+        totalPoints += points;
+
+        // Ask user if they want to continue fishing
+        char userChoice;
+        cout << "Do you want to fish for another item? (y/n): ";
+        cin >> userChoice;
+        if (userChoice != 'y' && userChoice != 'Y') {
+            continueFishing = false;
+        }
+    }
+
+    // Display total points and a final message
+    cout << "\n--- Fishing Summary ---\n";
+    cout << "Total fishing points: " << totalPoints << endl;
+
+    if (totalPoints < 10) {
+        cout << "Better luck next time!\n";
+    } else if (totalPoints < 30) {
+        cout << "Not bad, you caught some decent items!\n";
+    } else if (totalPoints < 50) {
+        cout << "Great job, you're a skilled fisher!\n";
+    } else {
+        cout << "Amazing! You're a master angler!\n";
+    }
+
+    cout << "Thanks for playing the Fishing Game!\n";
+
+    return 0;
+}
